@@ -4,7 +4,7 @@ from flask import Flask
 def crear_app():
     app = Flask(
         __name__,
-        template_folder="../templates/pages",
+        template_folder="../templates",
         static_folder="../static"
     )
 
