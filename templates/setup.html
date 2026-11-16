@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Crear administrador | Smart Attendance{% endblock %}
+{% block content %}
+<section class="auth-panel">
+    <p class="etiqueta">PRIMER USO</p>
+    <h2>Crear cuenta administradora</h2>
+    <p>Esta pantalla solo está disponible mientras no exista una cuenta.</p>
+    <form class="auth-form" method="post" action="{{ url_for('rutas.configurar') }}">
+        <label for="usuario">Usuario</label>
+        <input id="usuario" name="usuario" type="text" minlength="3" maxlength="40" autocomplete="username" required autofocus>
+        <label for="password">Contraseña (mínimo 10 caracteres)</label>
+        <input id="password" name="password" type="password" minlength="10" autocomplete="new-password" required>
+        <label for="confirmacion">Repite la contraseña</label>
+        <input id="confirmacion" name="confirmacion" type="password" minlength="10" autocomplete="new-password" required>
+        <button type="submit">Crear administrador</button>
+    </form>
+</section>
+{% endblock %}

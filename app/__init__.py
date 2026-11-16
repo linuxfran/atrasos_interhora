@@ -1,34 +1,28 @@
-<<<<<<< HEAD
-from flask import Flask, render_template, redirect, url_for
-=======
+import os
+
 from flask import Flask
->>>>>>> 46452180217b1e9d5761da862ba3bf9ff4ffff11
+
+from app.config import Config
+from app.database import close_db, init_db
 
 
 def crear_app():
     app = Flask(
         __name__,
         template_folder="../templates",
-        static_folder="../static"
+        static_folder="../static",
     )
+    app.config.from_object(Config)
+    if app.config["DATABASE_PATH"] is None:
+        app.config["DATABASE_PATH"] = os.path.join(app.instance_path, "atrasos.sqlite3")
+    os.makedirs(app.instance_path, exist_ok=True)
 
-<<<<<<< HEAD
-    @app.route("/")
-    def inicio():
-        return render_template(
-            "index.html",
-            total_atrasos=0,
-            total_minutos=0,
-            estudiantes_recurrentes=0,
-            atrasos=[]
-        )
-
-    @app.route("/registrar", methods=["POST"])
-    def registrar():
-        return redirect(url_for("inicio"))
-=======
     from app.routes import rutas
+
     app.register_blueprint(rutas)
->>>>>>> 46452180217b1e9d5761da862ba3bf9ff4ffff11
+    app.teardown_appcontext(close_db)
+
+    with app.app_context():
+        init_db()
 
     return app

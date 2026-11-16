@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Smart Attendance{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="encabezado">
+        <div>
+            <h1>Smart Attendance</h1>
+            <p>Sistema de registro de atrasos</p>
+        </div>
+        {% if session.get('usuario_id') %}
+        <nav class="sesion-nav">
+            <span>Sesión: {{ session.get('nombre_usuario') }}</span>
+            <form action="{{ url_for('rutas.salir') }}" method="post">
+                <button class="boton-nav" type="submit">Cerrar sesión</button>
+            </form>
+        </nav>
+        {% endif %}
+    </header>
+    <main class="contenedor">
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+        {% if mensajes %}
+        {% for categoria, mensaje in mensajes %}
+        <p class="mensaje {{ categoria }}" role="status">{{ mensaje }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer><p>Proyecto ABP | Smart Attendance</p></footer>
+</body>
+</html>
