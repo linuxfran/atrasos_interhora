@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Panel | Smart Attendance{% endblock %}
+{% block title %}Panel de atrasos | Control de atrasos{% endblock %}
 {% block content %}
 <section class="bienvenida">
     <p class="etiqueta">CONTROL DE ASISTENCIA</p>
     <h2>Panel de atrasos</h2>
-    <p>Registra y organiza los atrasos de los estudiantes de forma rápida y sencilla.</p>
+    <p>Registra y organiza los atrasos de tus estudiantes de forma rápida y sencilla.</p>
 </section>
 
 <section class="estadisticas">
@@ -18,13 +18,13 @@
     <p>Completa los datos del estudiante.</p>
     <form action="{{ url_for('rutas.registrar') }}" method="post">
         <label for="nombre">Nombre del estudiante</label>
-        <input type="text" id="nombre" name="nombre" maxlength="120" placeholder="Ej: Juan Pérez" required>
+        <input type="text" id="nombre" name="nombre" maxlength="120" placeholder="Ej.: Juan Pérez" required>
         <label for="curso">Curso</label>
-        <input type="text" id="curso" name="curso" maxlength="80" placeholder="Ej: 3° TP" required>
+        <input type="text" id="curso" name="curso" maxlength="80" placeholder="Ej.: 3° TP" required>
         <label for="fecha">Fecha</label>
         <input type="date" id="fecha" name="fecha" required>
         <label for="minutos">Minutos de atraso</label>
-        <input type="number" id="minutos" name="minutos" min="0" max="1440" placeholder="Ej: 10" required>
+        <input type="number" id="minutos" name="minutos" min="0" max="1440" placeholder="Ej.: 10" required>
         <button type="submit">Registrar atraso</button>
     </form>
 </section>

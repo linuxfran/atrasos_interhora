@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Smart Attendance{% endblock %}</title>
+    <meta name="theme-color" content="#087f65">
+    <meta name="description" content="Sistema de registro y seguimiento de atrasos escolares.">
+    <title>{% block title %}Control de atrasos{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header class="encabezado">
-        <div>
-            <h1>Smart Attendance</h1>
-            <p>Sistema de registro de atrasos</p>
+        <div class="marca">
+            <span class="marca-icono" aria-hidden="true">A</span>
+            <div>
+                <h1>Control de atrasos</h1>
+                <p>Asistencia escolar</p>
+            </div>
         </div>
         {% if session.get('usuario_id') %}
         <nav class="sesion-nav">
@@ -31,6 +36,6 @@
         {% endwith %}
         {% block content %}{% endblock %}
     </main>
-    <footer><p>Proyecto ABP | Smart Attendance</p></footer>
+    <footer><p>Proyecto ABP · Gestión de asistencia escolar</p></footer>
 </body>
 </html>
