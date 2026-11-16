@@ -1,43 +1,110 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Atrasos</title>
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Smart Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <header>
-        <h1>Registro de Atrasos</h1>
 
-        <nav>
-            <a href="/">Inicio</a>
-        </nav>
+<body>
+    <header class="encabezado">
+        <div>
+            <h1>Smart Attendance</h1>
+            <p>Sistema de registro de atrasos</p>
+        </div>
+        <nav><a href="/">Inicio</a></nav>
     </header>
 
-    <main>
+    <main class="contenedor">
         <section class="bienvenida">
-            <h2>Sistema automático de atrasos</h2>
-
-            <p>
-                Registra y organiza los atrasos de los estudiantes
-                de forma rápida y sencilla.
-            </p>
+            <p class="etiqueta">CONTROL DE ASISTENCIA</p>
+            <h2>Bienvenido al sistema</h2>
+            <p>Registra y organiza los atrasos de los estudiantes
+                de forma rápida y sencilla.</p>
         </section>
 
-        <section class="formulario">
-            <h2>Prueba del sistema</h2>
-            <p>
-                Si puedes ver esta página en el navegador,
-                Flask está conectado correctamente.
-            </p>
+        {% with mensajes = get_flashed_messages() %}
+        {% if mensajes %}
+        {% for mensaje in mensajes %}
+        <p class="mensaje">{{ mensaje }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <section class="estadisticas">
+            <article class="tarjeta">
+                <p>Total de atrasos</p>
+                <h2>{{ total_atrasos }}</h2>
+            </article>
+            <article class="tarjeta">
+                <p>Minutos acumulados</p>
+                <h2>{{ total_minutos }}</h2>
+            </article>
+            <article class="tarjeta">
+                <p>Estudiantes recurrentes</p>
+                <h2>{{ estudiantes_recurrentes }}</h2>
+            </article>
+        </section>
+
+        <section class="panel formulario">
+            <h2>Registrar un atraso</h2>
+            <p>Completa los datos del estudiante.</p>
+
+            <form action="{{ url_for('registrar') }}" method="POST">
+                <label for="nombre">Nombre del estudiante</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required>
+
+                <label for="curso">Curso</label>
+                <input type="text" id="curso" name="curso" placeholder="Ej: 3° TP" required>
+
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" name="fecha" required>
+
+                <label for="minutos">Minutos de atraso</label>
+                <input type="number" id="minutos" name="minutos" min="0" placeholder="Ej: 10" required>
+
+                <button type="submit">Registrar atraso</button>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>Últimos registros</h2>
+
+            {% if atrasos %}
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Curso</th>
+                            <th>Fecha</th>
+                            <th>Minutos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for atraso in atrasos %}
+                        <tr>
+                            <td>{{ atraso.nombre }}</td>
+                            <td>{{ atraso.curso }}</td>
+                            <td>{{ atraso.fecha }}</td>
+                            <td>{{ atraso.minutos }} min</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="vacio">Todavía no hay atrasos registrados.
+                ¡Puedes agregar el primero desde el formulario!</p>
+            {% endif %}
         </section>
     </main>
 
     <footer>
-        <p>Proyecto ABP | Sistema de Registro de Atrasos</p>
+        <p>Proyecto ABP | Smart Attendance</p>
     </footer>
 </body>
+
 </html>
